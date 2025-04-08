@@ -8,8 +8,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/aguerra/grp/radius"
 	log "github.com/inconshreveable/log15"
+	"github.com/ubalogun-arista/grp/radius"
 )
 
 var testHookListenAndServe func(*Server, net.Listener) // used if non-nil
@@ -19,10 +19,11 @@ type Handler interface {
 }
 
 type ServerConfig struct {
-	Port     int    `default:"2083"`
-	CaFile   string `split_words:"true" default:"ca.crt"`
-	CertFile string `split_words:"true" default:"server.crt"`
-	KeyFile  string `split_words:"true" default:"server.key"`
+	Port           int                `default:"2083"`
+	CaFile         string             `split_words:"true" default:"ca.crt"`
+	CertFile       string             `split_words:"true" default:"server.crt"`
+	KeyFile        string             `split_words:"true" default:"server.key"`
+	ClientAuthType tls.ClientAuthType `split_words:"true" default:"tls.RequireAndVerifyClientCert"`
 	radius.RadiusConfig
 }
 
@@ -81,7 +82,7 @@ func (srv *Server) newTLSConfig() (*tls.Config, error) {
 	caPool := x509.NewCertPool()
 	caPool.AppendCertsFromPEM(ca)
 	tls := &tls.Config{
-		ClientAuth:   tls.RequireAndVerifyClientCert,
+		ClientAuth:   srv.conf.ClientAuthType,
 		ClientCAs:    caPool,
 		MinVersion:   tls.VersionTLS12,
 		Certificates: []tls.Certificate{cert},

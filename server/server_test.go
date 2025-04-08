@@ -23,10 +23,11 @@ func (h *FakeHandler) Handle(conn net.Conn) {
 
 func newTestServer(port int) *Server {
 	conf := &ServerConfig{
-		Port:     port,
-		CertFile: "testdata/server.crt",
-		KeyFile:  "testdata/server.key",
-		CaFile:   "testdata/ca.crt",
+		Port:           port,
+		CertFile:       "testdata/server.crt",
+		KeyFile:        "testdata/server.key",
+		CaFile:         "testdata/ca.crt",
+		ClientAuthType: tls.RequireAndVerifyClientCert,
 	}
 	srv := New(conf)
 	srv.Handler = &FakeHandler{}

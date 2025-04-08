@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/aguerra/grp/server"
 	log "github.com/inconshreveable/log15"
 	logext "github.com/inconshreveable/log15/ext"
 	"github.com/kelseyhightower/envconfig"
+	"github.com/ubalogun-arista/grp/server"
 )
 
 var version string
