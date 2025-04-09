@@ -1,4 +1,4 @@
-module github.com/ubalogun-arista/grp
+module github.com/aguerra/grp
 
 go 1.21.6
 
